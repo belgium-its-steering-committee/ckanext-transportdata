@@ -1,0 +1,14 @@
+# transportdata-js:
+#   filter: rjsmin
+#   output: ckanext-transportdata/%(version)s-transportdata.js
+#   contents:
+#     - js/transportdata.js
+#   extra:
+#     preload:
+#       - base/main
+
+# transportdata-css:
+#   filter: cssrewrite
+#   output: ckanext-transportdata/%(version)s-transportdata.css
+#   contents:
+#     - css/transportdata.css
