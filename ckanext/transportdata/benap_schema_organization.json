@@ -1,0 +1,421 @@
+{
+  "scheming_version": 1,
+  "organization_type": "organization",
+  "about": "A CKAN schema for organizations on the Belgian NAP",
+  "about_url": "https://github.com/belgium-its-steering-committee/ckanext-benap",
+  "fields": [
+    {
+      "field_name": "title",
+      "label": {
+        "en": "Organisation name (default)",
+        "fr": "Nom de l'organisation (défaut)",
+        "nl": "Naam van de organisatie (standaard)",
+        "de": "Name der Organisation (Standard)"
+      },
+      "required": true,
+      "help_text": {
+        "en": "Indicate the name of your organisation in your preferred language. Do not provide the name in multiple languages here. By defaullt, this organisation name will be shown in all languages. If you wan to specify the organisation name in multiple languages, you can do so by filling in the fields below.",
+        "fr": "Indiquez le nom de votre organisation dans votre langue de préférence. Ne donnez pas ici le nom dans différentes langues. Par défaut, ce nom d'organisation sera affiché dans toutes les langues. Si vous souhaitez préciser le nom de l'organisation dan différentes langues, vous pouvez le faire en remplissant les champs ci-dessous.",
+        "nl": "Geef de naam van de organisatie in de taal bij voorkeur. Vul hier geen meerdere talen in. Standaard zal deze organisatienaam getoond worden in alle talen. Wenst u de organisatienaam in meerdere talen te specifiëren, dan kan dit door de velden hieronder in te vullen.",
+        "de": "Geben Sie den Namen Ihrer Organisation in Ihrer bevorzugten Sprache an. Schreiben Sie bitte nicht hier den Namen in verschiedenen Sprachen. Standardmäβig wird dieser Name der Organisation in allen Sprachen angezeigt werden. Wenn Sie den Namen der Organisation in verschiedenen Sprachen angeben wollen, sollten Sie die Felder hier unten benutzen."
+      },
+      "form_snippet": "large_text.html",
+      "form_attrs": {
+        "data-module": "slug-preview-target"
+      },
+      "form_placeholder": {
+        "en": "My Organization name",
+        "fr": "Nom de mon organisation",
+        "nl": "Naam van je organisatie",
+        "de": "Name meiner Organisation"
+      }
+    },
+    {
+      "field_name": "display_title_en",
+      "label": {
+        "en": "EN Organization name",
+        "fr": "EN Nom de l'organisation",
+        "nl": "EN Naam van de organisatie",
+        "de": "EN Name der Organisation"
+      },
+      "form_placeholder": {
+        "en": "My Organization name",
+        "fr": "Nom de mon organisation",
+        "nl": "Naam van je organisatie",
+        "de": "Name meiner Organisation"
+      }
+    },
+    {
+      "field_name": "display_title_nl",
+      "label": {
+        "en": "NL Organization name",
+        "fr": "NL Nom de l'organisation",
+        "nl": "NL Naam van de organisatie",
+        "de": "NL Name der Organisation"
+      },
+      "form_placeholder": {
+        "en": "My Organization name",
+        "fr": "Nom de mon organisation",
+        "nl": "Naam van je organisatie",
+        "de": "Name meiner Organisation"
+      }
+    },
+    {
+      "field_name": "display_title_fr",
+      "label": {
+        "en": "FR Organization name",
+        "fr": "FR Nom de l'organisation",
+        "nl": "FR Naam van de organisatie",
+        "de": "FR Name der Organisation"
+      },
+      "form_placeholder": {
+        "en": "My Organization name",
+        "fr": "Nom de mon organisation",
+        "nl": "Naam van je organisatie",
+        "de": "Name meiner Organisation"
+      }
+    },
+    {
+      "field_name": "display_title_de",
+      "label": {
+        "en": "DE Organization name",
+        "fr": "DE Nom de l'organisation",
+        "nl": "DE Naam van de organisatie",
+        "de": "DE Name der Organisation"
+      },
+      "form_placeholder": {
+        "en": "My Organization name",
+        "fr": "Nom de mon organisation",
+        "nl": "Naam van je organisatie",
+        "de": "Name meiner Organisation"
+      }
+    },
+    {
+      "field_name": "name",
+      "label": {
+        "en": "URL",
+        "fr": "URL",
+        "nl": "URL",
+        "de": "URL"
+      },
+      "form_snippet": "slug.html",
+      "form_placeholder": {
+        "en": "my-organization",
+        "fr": "mon-organisation",
+        "nl": "mijn-organisatie",
+        "de": "meine-Organisation"
+      }
+    },
+    {
+      "field_name": "description_translated",
+      "label": {
+        "en": "Description",
+        "fr": "Description",
+        "nl": "Beschrijving",
+        "de": "Beschreibung"
+      },
+      "help_text": {
+        "en": "Describes your organization, e.g. its mission, core activities and how it is involved with transport data.",
+        "fr": "Décrit votre organisation, par ex. sa mission, ses activités principales et quelle est son implication avec les données de transport.",
+        "nl": "Beschrijft je organisatie, bijv. Haar missie, haar kernactiviteiten en  hoe zij betrokken is bij vervoersgegevens.",
+        "de": "Beschreibt Ihre Organisation, zum B. ihre Aufgabe, ihre Haupttätigkeiten und ihren Verband mit Verkehrsdaten."
+      },
+      "form_snippet": "fluent_markdown.html",
+      "display_snippet": "fluent_markdown.html",
+      "error_snippet": "fluent_text.html",
+      "validators": "fluent_text",
+      "output_validators": "fluent_core_translated_output",
+      "form_placeholder": {
+        "en": "We provide on-demand transport services in whole Belgium, etc.",
+        "fr": "Nous fournissons des services de transport dans toute la Belgique, etc.",
+        "nl": "We leveren vervoersdiensten in heel België, enz.",
+        "de": "Wir bieten Verkehrsdienste in ganz Belgien, usw. , an."
+      },
+      "form_languages": [
+        "en",
+        "nl",
+        "fr",
+        "de"
+      ]
+    },
+    {
+      "field_name": "image_url",
+      "label": {
+        "en": "Organisation Logo",
+        "fr": "Logo d'orginisation",
+        "nl": "Organisatie Logo",
+        "de": "Organisations Logo"
+      },
+      "help_text": {
+        "en": "The logo of your organisation, only .jpeg, .jpg, .bmp and .png extensions allowed",
+        "fr": "Le logo de votre organisation, que .jpeg, .jpg, .bmp et .png extensions accepté",
+        "nl": "Het logo van je organisatie, enkel .jpeg, .jpg, .bmp en .png extensies toeglaten",
+        "de": "Das Logo Ihrer Organisation, nûr .jpeg, .jpgn .bmp und .png erweiterungen erlaubt"
+      },
+      "form_snippet": "upload_organisation_logo.html",
+      "form_placeholder": "https://www.my-organization.com/my-logo",
+      "upload_field": "image_upload",
+      "upload_clear": "clear_upload",
+      "upload_label": "organisation_Logo",
+      "validators": "not_empty unicode logo_extensions",
+      "required":true
+    },
+    {
+      "field_name": "do_address",
+      "label": {
+        "en": "Address",
+        "fr": "Adresse",
+        "nl": "Adres",
+        "de": "Adresse"
+      },
+      "help_text": {
+        "en": "Official address of your organisation in Belgium. If necessary, please fill it in in multiple languages, each separated by \"/\".",
+        "fr": "Adresse officielle de votre organisation en Belgique. Si nécessaire, merci de compléter dans plusieurs langues, chacune séparée par une \"/\".",
+        "nl": "Officiëel adres van je organisatie in België. Indien nodig, gelieve  in verschillende talen in te vullen, elke gescheid door een \"/\".",
+        "de": "Offizielle Adresse Ihrer Organisation in Belgien. Wenn nötig, bitte in verschiedenen Sprachen ausfüllen, jede getrennt durch ein \"/\"."
+      },
+      "form_placeholder": "Boulevard Anspach, 1 - 1000 Bruxelles (Belgium)",
+      "required": true
+    },
+    {
+      "field_name": "do_email",
+      "label": {
+        "en": "Email",
+        "fr": "Email",
+        "nl": "E-mail",
+        "de": "Email"
+      },
+      "validators": "scheming_required email_validator not_empty",
+      "form_placeholder": "data@my-organization.com",
+      "help_text": {
+        "en": "E-mail address to be contacted for transport data related matters. Please use a general e-mail address (not a personal one). The address must contain @ and a dot.",
+        "fr": "Veuillez utiliser une adresse e-mail générale (et non personnelle). Adresse e-mail à contacter pour les question liées aux données de transport. L'adresse doit contenir une @ et un point.",
+        "nl": "Gelieve bij voorkeer een algemeen e-mailadres te gebruiken (geen persoonlijk). E-mailadres te contacteren voor vragen met betrekking tot vervoersgegevens. Het adres moet een @ en een punt inhouden.",
+        "de": "Bitte verwenden Sie eine allgemeine E-Mail-Adresse (keine persönliche). E-Mail zu kontaktieren für Fragen bezüglich der Verkehrsdaten. Die Adresse muss @ und einen Punkt beinhalten."
+      },
+      "required": true
+    },
+    {
+      "field_name": "do_website",
+      "label": {
+        "en": "Website",
+        "fr": "Site web",
+        "nl": "Website",
+        "de": "Website"
+      },
+      "help_text": {
+        "en": "The website address must start with \"http://\", or \"https://\"",
+        "fr": "L'adresse du site web doit commencer par \"http://\" ou \"https://\".",
+        "nl": "Het adres van de website moet beginnen met \"http://\" ou \"https://\".",
+        "de": "Die Adresse der Website muss mit \"http://\" oder \"https://\" anfangen."
+      },
+      "form_placeholder": "https://www.my-organization.com",
+      "validators": "scheming_required url_validator"
+    },
+    {
+      "field_name": "do_tel",
+      "label": {
+        "en": "Telephone number",
+        "fr": "Numéro de téléphone",
+        "nl": "Telefoonnummer",
+        "de": "Telefonnummer"
+      },
+      "help_text": {
+        "en": "The telephone number must start with the country prefix (e.g. \",+32\" for Belgium) and may only contain numbers from 0 to 9 besides the \"+\" sign.",
+        "fr": "Le numéro de téléphone doit commencer par le préfixe du pays (par ex. \"+32\" pour la Belgique) et ne peut contenir que des chiffres de 0 à 9 en plus du signe \"+\".",
+        "nl": "Het telefoonnummer moet met het netnummer van het land beginnen (bv. \"+32\" voor België) en kan naast de teken \"+\" alleen maar cijfers van 0 tot 9 inhouden.",
+        "de": "Die Telefonnummer muss mit der Vorwahl des Landes anfangen (zum B. \"+32\" für Belgien) und kann neben dem Zeichen \"+\" nur Zahlen von 0 bis 9 beinhalten."
+      },
+      "form_placeholder": "+32XXXXXXXX",
+      "required": true,
+      "validators": "phone_number_validator not_empty"
+    },
+ {
+      "field_name": "agreement_declaration_mmtis",
+      "label": {
+        "en": "Declaration of compliance MMTIS",
+        "fr": "déclaration de conformité MMTIS",
+        "nl": "Verklaring van overeenstemming MMTIS",
+        "de": "Einhaltungserklärung MMTIS"
+      },
+      "multi_help": "true",
+      "preset": "multiple_radio_compliance",
+      "choices": [
+         {
+          "value": "Y",
+          "label": {
+              "en": "I hereby declare to be compliant to articles 3 to 8 of the European regulation (EU) 2017/1926.",
+              "fr": "Je déclare être en conformité avec les articles 3 à 8 du règlement délégué européen (UE) 2017/1926.",
+              "nl": "Ik verklaar voor deze dataset in overeenstemming te zijn met artikels 3 tot 8 van de Europese verordening (EU) 2017/1926.",
+              "de": "Hiermit erkläre ich, in Übereinstimmung mit den Artikeln 3 bis 8 der Europäischen Verordnung (EU) 2017/1926."
+            },
+          "help_text": {
+              "en": "For more information <a>click here</a>",
+              "fr": "Pour de plus amples informations, <a>cliquez ici</a>",
+              "nl": "Voor meer info <a>klik hier</a>",
+              "de": "Für weitere Informationen, bitte <a>hier klicken</a>"
+           },
+          "help_link": "/pages/declaration-of-compliance"
+         },
+        {
+          "value": "N",
+          "label": {
+              "en": "I do not yet submit a declaration of compliance.",
+              "fr": "Je ne fournis pas encore une déclaration de conformité.",
+              "nl": "Ik leg momenteel nog geen verklaring van overeenstemming af.",
+              "de": "Ich lege jetzt noch keine  Einhaltungserklärung vor."
+            },
+           "help_text": {
+              "en": "It is possible to submit this declaration at a later moment. However, do not forget to do this as the declaration of compliance is necessary for the assessment of compliance.",
+              "fr": "Vous pouvez encore présenter cette déclaration plus tard, mais ne l’oubliez pas car elle est nécessaire pour l’évaluation de la conformité.",
+              "nl": "Het is mogelijk om deze verklaring van overeenstemming nog op een later moment in te dienen. Vergeet dit echter niet, deze verklaring is noodzakelijk voor de beoordeling van de naleving. ",
+              "de": "Sie können noch später eine Erklärung vorlegen. Vergessen Sie diese Erklärung aber nicht, weil die Einhaltungserklärung für die Einhaltungsprüfung notwendig ist."
+            },
+          "help_link": ""
+        }
+      ]
+    },
+    {
+      "field_name": "optional_comment",
+      "label": {
+        "en": "text box for optional comment",
+        "fr": "zone de texte pour commentaire facultatif",
+        "nl": "tekstveld voor optionele opmerking",
+        "de": "Textfeld für optionalen Kommentar"
+      },
+      "classes": ["margin-left-24"]
+    },
+    {
+      "field_name": "rtti_doc_document_upload",
+      "label": {
+        "en": "Declaration of compliance RTTI",
+        "fr": "Déclaration de conformité RTTI",
+        "nl": "Verklaring van overeenstemming RTTI",
+        "de": "Konformitätserklärung RTTI"
+      },
+      "validators": "unicode remove_whitespace benap_https_validator doc_validator",
+      "help_text": {
+        "en": "",
+        "fr": "",
+        "nl": "",
+        "de": ""
+      },
+      "form_snippet": "doc_upload.html",
+      "upload_field": "rtti_upload_doc",
+      "upload_clear": "rtti_clear_upload_doc",
+      "upload_label": {
+        "en": "Declaration of compliance RTTI",
+        "fr": "Déclaration de conformité RTTI",
+        "nl": "Verklaring van overeenstemming RTTI",
+        "de": "Konformitätserklärung RTTI"
+      }
+    },
+    {
+      "field_name": "srti_doc_document_upload",
+      "label": {
+        "en": "Declaration of compliance SRTI",
+        "fr": "Déclaration de conformité SRTI",
+        "nl": "Verklaring van overeenstemming SRTI",
+        "de": "Konformitätserklärung SRTI"
+      },
+      "validators": "unicode remove_whitespace benap_https_validator doc_validator ",
+      "help_text": {
+        "en": "",
+        "fr": "",
+        "nl": "",
+        "de": ""
+      },
+      "form_snippet": "doc_upload.html",
+      "upload_field": "srti_upload_doc",
+      "upload_clear": "srti_clear_upload_doc",
+      "upload_label": {
+        "en": "Declaration of compliance SRTI",
+        "fr": "Déclaration de conformité SRTI",
+        "nl": "Verklaring van overeenstemming SRTI",
+        "de": "Konformitätserklärung SRTI"
+      }
+    },
+    {
+      "field_name": "sstp_doc_document_upload",
+      "label": {
+        "en": "Declaration of compliance SSTP",
+        "fr": "Déclaration de conformité SSTP",
+        "nl": "Verklaring van overeenstemming SSTP",
+        "de": "Konformitätserklärung SSTP"
+      },
+      "validators": "unicode remove_whitespace benap_https_validator doc_validator",
+      "help_text": {
+        "en": "",
+        "fr": "",
+        "nl": "",
+        "de": ""
+      },
+      "form_snippet": "doc_upload.html",
+      "upload_field": "sstp_upload_doc",
+      "upload_clear": "sstp_clear_upload_doc",
+      "upload_label": {
+        "en": "Declaration of compliance SSTP",
+        "fr": "Déclaration de conformité SSTP",
+        "nl": "Verklaring van overeenstemming SSTP",
+        "de": "Konformitätserklärung SSTP"
+      }
+    },
+    {
+      "field_name": "proxy_pdf_url",
+      "label": {
+        "en": "Proxy agreement",
+        "fr": "Convention proxy",
+        "nl": "Proxy overeenkomst",
+        "de": "Vollmachtsvereinbarung"
+      },
+      "validators": "doc_validator",
+      "help_text": {
+        "en": "Upload the PDF 'Proxy agreement'",
+        "fr": "Télécharger la 'Convention proxy' au format PDF",
+        "nl": "Upload de PDF 'Proxy overeenkomst'",
+        "de": "Upload der PDF 'Vollmachtsvereinbarung'"
+      },
+      "form_snippet": "proxy_upload.html",
+      "upload_field": "proxy_upload",
+      "upload_clear": "proxy_clear_upload",
+      "upload_label": {
+        "en": "Proxy agreement",
+        "fr": "Convention proxy",
+        "nl": "Proxy overeenkomst",
+        "de": "Vollmachtsvereinbarung"
+      }
+    },
+    {
+      "field_name": "organization_agreement_declaration_nap",
+      "label": {
+        "en": "Disclaimer Declarations of compliance",
+        "fr": "Avis de non-responsabilité Déclarations de conformité",
+        "nl": "Disclaimer Verklaringen van overeenstemming",
+        "de": "Haftungsausschluss Entsprechenserklärungen"
+      },
+      "multi_help": "true",
+      "preset": "multiple_checkbox_compliance",
+      "choices": [
+         {
+          "value": "Y",
+          "label": {
+              "en": "I hereby declare that I have been informed about the obligation to fill in a declaration of compliance for every type of NAP for which I register datasets or services.",
+              "fr": "Je déclare être informé(e) de l’obligation d’introduire une déclaration de conformité pour chaque type de NAP pour lequel j’enregistre des jeux de données ou des services.",
+              "nl": "Ik verklaar geïnformeerd te zijn over de verplichting om een verklaring van overeenstemming in te dienen voor elk type van NAP waarvoor ik datasets of diensten registreer.",
+              "de": "Ich erkläre, daβ ich über die Plicht weiβ, eine Übereinstimmungserklärung für jeden Typ von NAP, wofür ich Datensätze oder Dienste registriere, einzutragen."
+            },
+          "help_text": {
+              "en": "For every NAP you register datasets or services (MMTIS, RTTI, SRTI, SSTP), your organization must submit a form in which it declares to be compliant to the respective European regulations <a>For more information click here.</a>\n \nIf your organization is operating in the domain of Safety Related Traffic Information (NAP SRTI), your organization might be required to provide a declaration of compliance even without registering datasets or services. ",
+              "fr": "Pour chaque NAP sur lequel vous enregistrez des jeux de données ou des services (MMTIS, RTTI, SRTI, SSTP), votre organisation doit introduire un formulaire où elle déclare être en conformité avec les Règlements européens respectifs. <a>Pour de plus amples informations, cliquez ici.</a>\n\nSi votre organisation exerce ses activités dans le domaine des informations sur la circulation liées à la sécurité routière (NAP SRTI), votre organisation doit peut-être introduire une déclaration de conformité même si vous n’enregistrez pas de jeux de données ou de services. ",
+              "nl": "Voor elk NAP waarvoor u datasets of diensten  registreert (MMTIS, RTTI, SRTI, SSTP) moet uw organisatie een formulier indienen voor elk type NAP waarbij uw organisatie aangeeft in overeenstemming te zijn met de respectievelijke Europese Verordeningen. <a>Voor meer informatie klik hier.</a>\n\nIndien uw organisatie opereert in het domein van verkeersveiligheidsinformatie (NAP SRTI) dient uw organisatie mogelijks een verklaring van overeenstemming in te dienen zelfs indien u geen datasets of diensten registreert. ",
+              "de": "Für jeden NAP, worauf Sie Datensätze oder Dienste registrieren (MMTIS, RTTI, SRTI, SSTP), muss Ihre Organisation ein Formular eintragen, wo sie ihre Beachtung der jeweiligen europäischen Verordnungen bestätigt. <a>Klicken Sie hier für weitere Informationen.</a>\n\nWenn Ihre Organisation im Sektor der für die Straßenverkehrssicherheit relevanter Verkehrsmeldungen (NAP SRTI) tätig ist, muss Ihre Organisation möglicherweise eine Übereinstimmungserklärung eintragen, selbst wenn Sie keine Datensätze oder Dienste registrieren. "
+           },
+          "help_link": "/pages/declaration-of-compliance"
+         }
+      ],
+      "required": "true",
+      "display_snippet": null
+    }
+  ]
+}
+
