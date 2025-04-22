@@ -9,7 +9,25 @@ a, a:hover {
     color: #1c71bf;
 }
 
-.btn, .well {
+.btn {
+    border-radius: 0;
+    transition: none;
+}
+
+.btn-default, .btn-primary {
+    background-color: #11406e;
+    border-color: #11406e;
+    color: white;
+    box-shadow: none;
+}
+
+.btn-default:hover, .btn-primary:hover {
+    background-color: #0d3357 !important;
+    border-color: #0d3357 !important;
+    color: white;
+}
+
+/* .btn, .well {
     border-radius: 0;
 }
 
@@ -31,7 +49,7 @@ a, a:hover {
 
 .rounded {
     border-radius: 4px;
-}
+} */
 
 h1.logo {
     color: #11406E;
@@ -45,19 +63,14 @@ h1.logo span {
     color: #919191
 }
 
-.container::before, .container::after {
+/* .container::before, .container::after {
     display: none;
-}
-
-.header-menu {
-    background: #fff;
-    min-height: 60px;
-    border-bottom: 1px solid #efefef;
-}
+} */
 
 .account-masthead {
     background: #fff;
     border-bottom: 1px solid #efefef;
+    color: black;
 }
 
 .account-masthead .account ul li {
@@ -79,20 +92,19 @@ h1.logo span {
     color: #333;
 }
 
-.account-masthead .account ul li label[for=field-lang-select] {
-    display: none;
-}
-
 .account-masthead .account ul li #field-lang-select {
     border: none;
     height: 31px;
 }
 
 .masthead {
+    background: #fff;
+    min-height: 60px;
+    border-bottom: 1px solid #efefef;
     padding: 0;
 }
 
-.masthead  .nav > li > a, .nav > li > a {
+/* .masthead  .nav > li > a, .nav > li > a {
     text-decoration: none;
     font-size: 20px;
 }
@@ -110,25 +122,32 @@ h1.logo span {
     border: none;
 }
 
-.form-control#field-sitewide-search::placeholder {
-    font-size: 18px
+*/
+
+/* .nav > li > a:hover, .nav > li > a:focus {
+    text-decoration: none;
+    background-color: rgba(0, 0, 0, 0);
+}  */
+
+#main-navigation-toggle > ul > li > a {
+    color: #1c71bf;
+    font-size: 20px;
+    background-color: white;
+    border-radius: 0;
 }
 
-.nav > li > a:hover, .nav > li > a:focus {
+#main-navigation-toggle > ul > li > a:hover, 
+#main-navigation-toggle > ul > li.active > a
+{
+    border-bottom: 3px solid #1c71bf;
     text-decoration: none;
     background-color: rgba(0, 0, 0, 0);
 }
 
-.masthead .nav > li > a, .masthead .nav > li > a:focus, .masthead .nav > li > a:hover, .nav > li > a,
- .nav > li > a:hover, .nav > li > a:focus, .fa-bars, .masthead .nav > .active > a,
-  .masthead .nav > .active > a:hover, .masthead .nav > .active > a:focus {
-    color: #1c71bf;
-}
-
-#main-navigation-toggle.collapse.in {
+/* #main-navigation-toggle.collapse.in {
     display: flex;
     flex-direction: column;
-}
+} */
 
 .form-control#field-sitewide-search {
     background-color: #efefef;
@@ -138,6 +157,12 @@ h1.logo span {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+
+.form-control#field-sitewide-search::placeholder {
+    font-size: 16px
+}
+
+/*
 
 
 #header-search {
@@ -160,14 +185,16 @@ h1.logo span {
 #header-search .field {
     max-width: 150px;
 }
+    */
 
-.hero {
+/* .hero {
     background: url("/images/main-image.jpg") no-repeat fixed !important;
     width:100%;
     height:350px;
     margin:0;
     padding:0;
-}
+} */
+/*
 
 .large-title {
     background: #11406E;
@@ -179,11 +206,16 @@ h1.logo span {
     font-weight: bold;
 }
 
+
+*/
 .flex {display:flex}
+
 
 .align-items-center {
     align-items: center
 }
+
+/*
 
 .searchbox {
     background: #0CA0C9;
@@ -276,15 +308,26 @@ button {
     font-size: 18px;
 }
 
+*/
+
 .form-control {
     border-radius: 0;
     box-shadow: none;
     -webkit-box-shadow: none;
 }
-
-#field-main-search::placeholder {
-    color: #333;
+ 
+.form-control:focus {
+    border-radius: 0;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    border-color: #58a1e6;
 }
+
+/* #field-sitewide-search::placeholder {
+    color: #333;
+} */
+
+/*
 
 #content-box {
     background: white;
@@ -442,7 +485,6 @@ button {
     margin-bottom: 10px;
 }
 
-/* fix for edit resource */
 .info-block {
     position: relative;
     display: block;
@@ -509,17 +551,14 @@ footer p, .site-footer a, .site-footer, .site-footer label, .site-footer small {
     align-items: center;
 }
 
-#field-lang-select {
-    border: 1px solid black;
-    width: 50px;
-    border-radius: .25rem;
-    background-color: #fff;
+*/
 
-    /*-moz-appearance:none;
-    -webkit-appearance:none;
-    appearance:none;
-    background: url("/images/arrow-down.svg") no-repeat right #fff;*/
+#field-account-masthead-lang-select {
+    border: none;
+    background-color: #fff;
+    height: 31px;
 }
+/*
 
 select {
     -moz-appearance:none;
@@ -547,18 +586,20 @@ select {
 select {
     color: black;
     background: url("/images/arrow-down.svg") no-repeat right #fff;
-}
+}*/
 
-div[role=main] {
+div.main {
     background: #fff;
 }
 
 .wrapper {
     border: 1px solid #efefef;
     border-radius: 0;
-    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
-    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    box-shadow: none;
+    -webkit-box-shadow: none;
 }
+
+/*
 
 .module-heading {
     border: 0;
@@ -578,10 +619,27 @@ span.item-label {
     background-color: #11406e;
 }
 
+*/
 .media-grid {
     background: #fff;
     border: none;
 }
+
+.media-item {
+    float: none;
+    width: auto;
+}
+
+.media-view {
+    transition: none;
+}
+
+.media-view:hover {
+    box-shadow: none;
+    border-color: black;
+}
+
+/*
 
 .no-dec:hover {
     text-decoration: none;
@@ -684,8 +742,6 @@ span.item-count {
     }
 }
 
-/* todo fix correct pixels? */
-
 @media only screen and (min-width: 982px) {
     .flex-start-982px {
         justify-content: flex-start;
@@ -779,4 +835,4 @@ span.item-count {
     .scalable-ring {
         max-height: 225px;
     }
-}
+} */
