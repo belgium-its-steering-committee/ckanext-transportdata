@@ -1,5 +1,6 @@
 :root {
   --text-blue: #1c71bf;
+  --button-blue: #11406e;
 }
 body,
 .custom-font {
@@ -20,18 +21,30 @@ a:hover {
 }
 
 .btn-default,
-.btn-primary {
-  background-color: #11406e;
-  border-color: #11406e;
+.btn-primary 
+{
+  background-color: var(--button-blue);
+  border-color: var(--button-blue);
   color: white;
   box-shadow: none;
 }
 
 .btn-default:hover,
-.btn-primary:hover {
+.btn-default:active,
+.btn-default:focus,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:active:focus,
+.btn-primary:focus 
+{
   background-color: #0d3357 !important;
   border-color: #0d3357 !important;
   color: white;
+  box-shadow: none;
+}
+
+.dropdown-item:active {
+  background-color: var(--button-blue);
 }
 
 /* .btn, .well {
