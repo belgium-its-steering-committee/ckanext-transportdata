@@ -7,17 +7,3 @@
   </a>
 </hgroup>
 {% endblock %}
-
-{% block header_account_logged %}
-  <li>
-    {% snippet "snippets/account-masthead-language-selector.html" %}
-  </li>
-  {{super()}}
-{% endblock %}
-
-{% block header_account_notlogged %}
-  <li>
-    {% snippet "snippets/account-masthead-language-selector.html" %}
-  </li>
-  {{super()}}
-{% endblock %}
