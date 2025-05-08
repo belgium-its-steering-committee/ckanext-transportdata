@@ -28,8 +28,8 @@
     {% endfor %}
 </fieldset>
 <script>
-    let autocompleteOptions = JSON.parse(decodeURIComponent(escape("{{ h.benap_organisation_names_for_autocomplete() }}")).replace(/&#39;/g, '"'));
-    const organizations = JSON.parse(("{{ h.benap_retrieve_org_title_tel_email() }}").replace(/&#34;/g, '"'));
+    const autocompleteOptions = {{ h.benap_organisation_names_for_autocomplete() | tojson }};
+    const organizations = {{ h.benap_retrieve_org_title_tel_email() | tojson }};
     let valuesList = Object.values(autocompleteOptions);
 
     function getOrgEmailAndTelByName(orgs, title) {
