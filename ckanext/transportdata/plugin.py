@@ -5,9 +5,9 @@ import ckan.plugins.toolkit as toolkit
 # import ckanext.transportdata.cli as cli
 import ckanext.transportdata.helpers as helpers
 # import ckanext.transportdata.views as views
-# from ckanext.transportdata.logic import (
-#     action, auth, validators
-# )
+from ckanext.transportdata.logic import (
+    action, auth, validators
+)
 
 
 class TransportdataPlugin(plugins.SingletonPlugin):
@@ -18,7 +18,7 @@ class TransportdataPlugin(plugins.SingletonPlugin):
     # plugins.implements(plugins.IBlueprint)
     # plugins.implements(plugins.IClick)
     plugins.implements(plugins.ITemplateHelpers)
-    # plugins.implements(plugins.IValidators)
+    plugins.implements(plugins.IValidators)
     
 
     # IConfigurer
@@ -56,6 +56,6 @@ class TransportdataPlugin(plugins.SingletonPlugin):
 
     # IValidators
 
-    # def get_validators(self):
-    #     return validators.get_validators()
+    def get_validators(self):
+        return validators.get_validators()
     
