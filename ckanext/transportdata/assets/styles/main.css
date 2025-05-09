@@ -1,0 +1,252 @@
+:root {
+  --text-blue: #1c71bf;
+  --button-blue: #11406e;
+}
+
+body,
+.custom-font {
+  font-family: "Barlow Condensed";
+  margin: 0;
+  padding: 0;
+  background-color: #fff;
+}
+
+a,
+a:hover {
+  color: var(--text-blue);
+}
+
+.btn {
+  border-radius: 0;
+  transition: none;
+}
+
+.btn-default,
+.btn-primary 
+{
+  background-color: var(--button-blue);
+  border-color: var(--button-blue);
+  color: white;
+  box-shadow: none;
+}
+
+.btn-default:hover,
+.btn-default:active,
+.btn-default:focus,
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:active:focus,
+.btn-primary:focus 
+{
+  background-color: #0d3357 !important;
+  border-color: #0d3357 !important;
+  color: white;
+  box-shadow: none;
+}
+
+.dropdown-item:active {
+  background-color: var(--button-blue);
+}
+
+.category-caret {
+  display:inline-block;
+  width:0;
+  height:0;
+  margin-left:2px;
+  vertical-align:middle;
+  border-top:4px dashed;
+  border-top:4px solid \9;
+  border-right:4px solid transparent;
+  border-left:4px solid transparent
+}
+
+#header-logo h1.logo {
+  color: #11406e;
+  font-weight: bold;
+  font-size: 1.875rem;
+  margin-right: 1rem;
+  letter-spacing: -0.063rem;
+}
+
+#header-logo h1.logo span {
+  color: #919191;
+}
+
+.account-masthead {
+  background: #fff;
+  border-bottom: 1px solid #efefef;
+  color: black;
+}
+
+.account-masthead .account ul li {
+  border-left: 1px solid #efefef;
+}
+
+.account-masthead .account ul li:last-of-type {
+  border-right: 1px solid #efefef;
+}
+
+.account-masthead .account ul li a {
+  color: #333;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.account-masthead .account ul li a:hover {
+  background: #fff;
+  color: #333;
+}
+
+.account-masthead .account ul li #field-lang-select {
+  border: none;
+  height: 31px;
+}
+
+.masthead {
+  background: #fff;
+  min-height: 60px;
+  border-bottom: 1px solid #efefef;
+  padding: 0;
+}
+
+.social .nav-item {
+  width: 100%;
+}
+
+.social .nav-item > a {
+  color: var(--text-blue);
+  font-size: 20px;
+}
+
+/* Remove padding around dataset view on dataset detail page */
+.main .primary {
+  padding: 0;
+}
+
+/* We don't want word breaking on the org description on dataset page (might get fixed in the future)
+https://github.com/ckan/ckan/commit/5ffb68605662fe8684923b0aee276c234aa21727#diff-a19520f39f684e3013186e5566f9207fe98615bf537fa27dcae8688ada0d3621R9594
+*/
+#organization-info .context-info .description {
+  word-break: normal;
+  word-wrap: normal;
+}
+
+.page-header .nav-tabs li a,
+.page-header .nav-tabs li a:hover {
+  color: var(--text-blue);
+}
+
+#ngi-copyright {
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+#main-navigation-toggle > ul > li > a {
+  color: var(--text-blue);
+  font-size: 20px;
+  background-color: white;
+  border-radius: 0;
+}
+
+#main-navigation-toggle > ul > li > a:hover,
+#main-navigation-toggle > ul > li.active > a {
+  border-bottom: 3px solid var(--text-blue);
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.form-control#field-sitewide-search {
+  background-color: #efefef;
+  border: none;
+  max-width: 150px;
+  border-radius: 2px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.form-control#field-sitewide-search::placeholder {
+  font-size: 16px;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.site-footer .attribution p {
+  color: #666;
+  font-weight: bold;
+}
+
+.site-footer .lang-select .form-group {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0;
+}
+
+#lang > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-control {
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.form-control:focus {
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  border-color: #58a1e6;
+}
+
+#field-account-masthead-lang-select {
+  border: none;
+  background-color: #fff;
+  height: 31px;
+}
+
+div.main {
+  background: #fff;
+}
+
+.wrapper {
+  border: 1px solid #efefef;
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.media-grid {
+  background: #fff;
+  border: none;
+}
+
+.media-item {
+  float: none;
+  width: auto;
+}
+
+.media-view {
+  transition: none;
+}
+
+.media-view:hover {
+  box-shadow: none;
+  border-color: black;
+}
+
+.badge-default,
+.badge[data-format] {
+  background-color: rgb(170, 170, 170);
+}
+
+#td-dataset-heading > h2 {
+  margin: 0;
+}
