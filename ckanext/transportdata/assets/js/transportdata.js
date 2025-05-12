@@ -1,12 +1,38 @@
-// Enable JavaScript's strict mode. Strict mode catches some common
-// programming errors and throws exceptions, prevents some unsafe actions from
-// being taken, and disables some confusing and bad JavaScript features.
 "use strict";
 
-ckan.module('example-test-module', function ($) {
+ckan.module("collapsible-section", function ($) {
   return {
     initialize: function () {
-      console.log("I've been initialized for element: ", this.el);
+      this.isOpen = true;
+      this.caret = this._createCaretEl();
+      // For some reason the element is wrapped in a singleton list
+      this.sectionEl = this.el[0];
+      this.headingContainer = this.sectionEl.children[0];
+      this.headingContainer.appendChild(this.caret);
+      this.headingContainer.style['cursor'] = 'pointer';
+      this.collapsiblePart = this.sectionEl.children[1];
+      this.headingContainer.addEventListener('mousedown', this._toggleCollapsed.bind(this));
+    },
+    teardown: function () {
+      this.headingContainer.removeEventListener('mousedown', this._toggleCollapsed.bind(this));
+    },
+    _toggleCollapsed: function () {
+      this.isOpen = !this.isOpen;
+      console.log(this.isOpen);
+      if (this.isOpen) {
+        this.caret.style['transform'] = 'rotate(180deg)';
+        this.collapsiblePart.style['display'] = 'block';
+      } else {
+        this.caret.style['transform'] = 'rotate(0deg)';
+        this.collapsiblePart.style['display'] = 'none';
+      }
+    },
+    _createCaretEl() {
+      const caret = document.createElement('span');
+      caret.classList = ['category-caret mx-3'];
+      caret.style['transform'] = 'rotate(180deg)';
+
+      return caret;
     }
   };
 });
