@@ -18,7 +18,6 @@ ckan.module("collapsible-section", function ($) {
     },
     _toggleCollapsed: function () {
       this.isOpen = !this.isOpen;
-      console.log(this.isOpen);
       if (this.isOpen) {
         this.caret.style['transform'] = 'rotate(180deg)';
         this.collapsiblePart.style['display'] = 'block';
