@@ -28,7 +28,7 @@ ckan.module("collapsible-section", function ($) {
     },
     _createCaretEl() {
       const caret = document.createElement('span');
-      caret.classList = ['category-caret mx-3'];
+      caret.classList = ['category-caret me-3'];
       caret.style['transform'] = 'rotate(180deg)';
 
       return caret;
