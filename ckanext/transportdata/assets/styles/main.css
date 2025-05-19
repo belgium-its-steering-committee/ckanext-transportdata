@@ -317,3 +317,11 @@ This is a fix
   height: 100%;
   border: 0;
 }
+
+/**
+ * Collapsible parts on custom pages
+ */
+.collapsible-item-title-link-text {
+  font-size: 16px;
+  font-weight: 700;
+}
