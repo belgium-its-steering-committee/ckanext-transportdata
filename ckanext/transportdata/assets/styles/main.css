@@ -147,6 +147,7 @@ https://github.com/ckan/ckan/commit/5ffb68605662fe8684923b0aee276c234aa21727#dif
   font-size: 20px;
   background-color: white;
   border-radius: 0;
+  border-bottom: 3px solid white;
 }
 
 #main-navigation-toggle > ul > li > a:hover,
@@ -324,4 +325,35 @@ This is a fix
 .collapsible-item-title-link-text {
   font-size: 16px;
   font-weight: 700;
+}
+
+/**
+ * Hamburger menu on small screen, fix 
+ */
+.masthead .navbar-toggler {
+  border: none;
+}
+
+.masthead .navbar-toggler .fa-bars {
+  color: var(--text-blue) !important;
+}
+
+.caret {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 2px;
+	vertical-align: middle;
+	border-top: 4px dashed;
+	border-top: 4px solid \9;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+}
+
+.dropup .caret,
+.navbar-fixed-bottom .dropdown .caret {
+  content:"";
+  border-top:0;
+  border-bottom:4px dashed;
+  border-bottom:4px solid \9
 }
