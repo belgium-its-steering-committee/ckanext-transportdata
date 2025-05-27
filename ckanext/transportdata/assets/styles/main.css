@@ -44,6 +44,10 @@ a:hover {
   box-shadow: none;
 }
 
+.btn-success {
+  box-shadow: none;
+}
+
 .dropdown-item:active {
   background-color: var(--button-blue);
 }
