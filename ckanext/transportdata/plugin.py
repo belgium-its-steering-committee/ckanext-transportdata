@@ -1,25 +1,28 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
-
-
 # import ckanext.transportdata.cli as cli
-import ckanext.transportdata.helpers as helpers
 # import ckanext.transportdata.views as views
-from ckanext.transportdata.logic import (
-    action, auth, validators
-)
+
+from ckanext.transportdata.uploader import OrganizationUploader
 
 
+@plugins.toolkit.blanket.auth_functions
+@plugins.toolkit.blanket.actions
+@plugins.toolkit.blanket.helpers
+@plugins.toolkit.blanket.validators
 class TransportdataPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
+    plugins.implements(plugins.IUploader)
     
-    # plugins.implements(plugins.IAuthFunctions)
-    # plugins.implements(plugins.IActions)
-    # plugins.implements(plugins.IBlueprint)
-    # plugins.implements(plugins.IClick)
-    plugins.implements(plugins.ITemplateHelpers)
-    plugins.implements(plugins.IValidators)
+    # IUploader
     
+    def get_uploader(self, upload_to, old_filename):
+        if upload_to == "group":
+            return OrganizationUploader(upload_to, old_filename)
+        return None
+
+    def get_resource_uploader(self, data_dict):
+        return None
 
     # IConfigurer
 
@@ -27,17 +30,6 @@ class TransportdataPlugin(plugins.SingletonPlugin):
         toolkit.add_template_directory(config_, "templates")
         toolkit.add_public_directory(config_, "public")
         toolkit.add_resource("assets", "transportdata")
-
-    
-    # IAuthFunctions
-
-    # def get_auth_functions(self):
-    #     return auth.get_auth_functions()
-
-    # IActions
-
-    # def get_actions(self):
-    #     return action.get_actions()
 
     # IBlueprint
 
@@ -48,14 +40,3 @@ class TransportdataPlugin(plugins.SingletonPlugin):
 
     # def get_commands(self):
     #     return cli.get_commands()
-
-    # ITemplateHelpers
-
-    def get_helpers(self):
-        return helpers.get_helpers()
-
-    # IValidators
-
-    def get_validators(self):
-        return validators.get_validators()
-    
