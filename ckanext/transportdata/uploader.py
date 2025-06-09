@@ -148,7 +148,9 @@ class OrganizationUploader(object):
                 self.filename = self.upload_field_storage.filename
                 self.filename = str(datetime.datetime.utcnow()) + self.filename
                 self.filename = munge.munge_filename_legacy(self.filename)
-                self.filepath = os.path.join(self.storage_path, self.filename)
+                organization_storagepath = os.path.join(self.storage_path, data_dict.get('name'))
+                _make_dirs_if_not_existing(organization_storagepath)
+                self.filepath = os.path.join(organization_storagepath, self.filename)
                 data_dict['url_type'] = 'upload'
                 self.upload_file = _get_underlying_file(
                     self.upload_field_storage)
