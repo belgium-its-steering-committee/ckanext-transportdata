@@ -149,6 +149,7 @@ class OrganizationUploader(object):
                 self.filename = str(datetime.datetime.utcnow()) + self.filename
                 self.filename = munge.munge_filename_legacy(self.filename)
                 self.filepath = os.path.join(self.storage_path, self.filename)
+                data_dict['url_type'] = 'upload'
                 self.upload_file = _get_underlying_file(
                     self.upload_field_storage)
                 self.tmp_filepath = self.filepath + '~'
