@@ -6,7 +6,9 @@ import logging
 
 import os
 import datetime
+import magic
 import mimetypes
+from pathlib import Path
 import ckan.lib.munge as munge
 import ckan.logic as logic
 import ckan.plugins as plugins
@@ -42,20 +44,21 @@ def _copy_file(input_file, output_file, max_size):
 
 
 def _get_underlying_file(wrapper):
-    print("get Underlyding file")
     if isinstance(wrapper, FlaskFileStorage):
-        print("wrapper, flask", wrapper, FlaskFileStorage)
         return wrapper.stream
     return wrapper.file
 
 
 def _make_dirs_if_not_existing(storage_path):
-    try:
-        os.makedirs(storage_path)
-    except OSError as e:
-        # errno 17 is file already exists
-        if e.errno != 17:
-            raise
+    if os.path.isdir(storage_path):
+        pass
+    else:
+        try:
+            os.makedirs(storage_path)
+        except OSError as e:
+            # errno 17 is file already exists
+            if e.errno != 17:
+                raise
 
 
 class OrganizationUploader(object):
@@ -73,7 +76,8 @@ class OrganizationUploader(object):
         _make_dirs_if_not_existing(self.storage_path)
         self.object_type = object_type
         self.old_filename = old_filename
-        self.old_filepath = None
+        if old_filename:
+            self.old_filepath = os.path.join(self.storage_path, old_filename)
 
         # hack into this to upload NAP DOC
         # SSTP
@@ -135,8 +139,30 @@ class OrganizationUploader(object):
         self.clear = data_dict.pop(clear_field, None)
         self.file_field = file_field
         self.upload_field_storage = data_dict.pop(file_field, None)
+
         if not self.storage_path:
             return
+
+        if isinstance(self.upload_field_storage, (ALLOWED_UPLOAD_TYPES)):
+            if self.upload_field_storage.filename:
+                self.filename = self.upload_field_storage.filename
+                self.filename = str(datetime.datetime.utcnow()) + self.filename
+                self.filename = munge.munge_filename_legacy(self.filename)
+                self.filepath = os.path.join(self.storage_path, self.filename)
+                self.upload_file = _get_underlying_file(
+                    self.upload_field_storage)
+                self.tmp_filepath = self.filepath + '~'
+
+                self.verify_type()
+
+                data_dict[url_field] = self.filename
+
+        # keep the file if there has been no change
+        elif self.old_filename and not self.old_filename.startswith('http'):
+            if not self.clear:
+                data_dict[url_field] = self.old_filename
+            if self.clear and self.url == self.old_filename:
+                data_dict[url_field] = ''
         
         # hack into this to upload NAP DOC
         # SSTP
@@ -147,15 +173,18 @@ class OrganizationUploader(object):
         self.sstp_doc_file_field = 'sstp_upload_doc'
         self.sstp_doc_upload_field_storage = data_dict.pop(self.sstp_doc_file_field, None)
         if isinstance(self.sstp_doc_upload_field_storage, (ALLOWED_UPLOAD_TYPES)):
-            self.sstp_doc_filename = self.sstp_doc_upload_field_storage.filename
-            self.sstp_doc_filename = munge.munge_filename(self.sstp_doc_filename)
-            organization_storagepath = os.path.join(self.storage_path, data_dict.get('name'))
-            _make_dirs_if_not_existing(organization_storagepath)
-            self.sstp_doc_filepath = os.path.join(organization_storagepath, self.sstp_doc_filename)
-            data_dict['sstp_doc_document_upload'] = self.sstp_doc_filename
-            data_dict['url_type'] = 'upload'
-            self.sstp_doc_upload_file = _get_underlying_file(self.sstp_doc_upload_field_storage)
-            self.sstp_doc_tmp_filepath = self.sstp_doc_filepath + '~'
+            if self.sstp_doc_upload_field_storage.filename:
+                self.sstp_doc_filename = self.sstp_doc_upload_field_storage.filename
+                self.sstp_doc_filename = str(datetime.datetime.utcnow()) + self.sstp_doc_filename
+                self.sstp_doc_filename = munge.munge_filename_legacy(self.sstp_doc_filename)
+                organization_storagepath = os.path.join(self.storage_path, data_dict.get('name'))
+                _make_dirs_if_not_existing(organization_storagepath)
+                self.sstp_doc_filepath = os.path.join(organization_storagepath, self.sstp_doc_filename)
+                data_dict['sstp_doc_document_upload'] = self.sstp_doc_filename
+                data_dict['url_type'] = 'upload'
+                self.sstp_doc_upload_file = _get_underlying_file(self.sstp_doc_upload_field_storage)
+                self.sstp_doc_tmp_filepath = self.sstp_doc_filepath + '~'
+
         # keep the file if there has been no change
         elif self.sstp_doc_old_filename and not self.sstp_doc_old_filename.startswith('http'):
             if not self.sstp_doc_clear:
@@ -172,15 +201,17 @@ class OrganizationUploader(object):
         self.srti_doc_file_field = 'srti_upload_doc'
         self.srti_doc_upload_field_storage = data_dict.pop(self.srti_doc_file_field, None)
         if isinstance(self.srti_doc_upload_field_storage, (ALLOWED_UPLOAD_TYPES)):
-            self.srti_doc_filename = self.srti_doc_upload_field_storage.filename
-            self.srti_doc_filename = munge.munge_filename(self.srti_doc_filename)
-            organization_storagepath = os.path.join(self.storage_path, data_dict.get('name'))
-            _make_dirs_if_not_existing(organization_storagepath)
-            self.srti_doc_filepath = os.path.join(organization_storagepath, self.srti_doc_filename)
-            data_dict['srti_doc_document_upload'] = self.srti_doc_filename
-            data_dict['url_type'] = 'upload'
-            self.srti_doc_upload_file = _get_underlying_file(self.srti_doc_upload_field_storage)
-            self.srti_doc_tmp_filepath = self.srti_doc_filepath + '~'
+            if self.srti_doc_upload_field_storage.filename:
+                self.srti_doc_filename = self.srti_doc_upload_field_storage.filename
+                self.srti_doc_filename = str(datetime.datetime.utcnow()) + self.srti_doc_filename
+                self.srti_doc_filename = munge.munge_filename_legacy(self.srti_doc_filename)
+                organization_storagepath = os.path.join(self.storage_path, data_dict.get('name'))
+                _make_dirs_if_not_existing(organization_storagepath)
+                self.srti_doc_filepath = os.path.join(organization_storagepath, self.srti_doc_filename)
+                data_dict['srti_doc_document_upload'] = self.srti_doc_filename
+                data_dict['url_type'] = 'upload'
+                self.srti_doc_upload_file = _get_underlying_file(self.srti_doc_upload_field_storage)
+                self.srti_doc_tmp_filepath = self.srti_doc_filepath + '~'
         # keep the file if there has been no change
         elif self.srti_doc_old_filename and not self.srti_doc_old_filename.startswith('http'):
             if not self.srti_doc_clear:
@@ -195,15 +226,17 @@ class OrganizationUploader(object):
         self.rtti_doc_file_field = 'rtti_upload_doc'
         self.rtti_doc_upload_field_storage = data_dict.pop(self.rtti_doc_file_field, None)
         if isinstance(self.rtti_doc_upload_field_storage, (ALLOWED_UPLOAD_TYPES)):
-            self.rtti_doc_filename = self.rtti_doc_upload_field_storage.filename
-            self.rtti_doc_filename = munge.munge_filename(self.rtti_doc_filename)
-            organization_storagepath = os.path.join(self.storage_path, data_dict.get('name'))
-            _make_dirs_if_not_existing(organization_storagepath)
-            self.rtti_doc_filepath = os.path.join(organization_storagepath, self.rtti_doc_filename)
-            data_dict['rtti_doc_document_upload'] = self.rtti_doc_filename
-            data_dict['url_type'] = 'upload'
-            self.rtti_doc_upload_file = _get_underlying_file(self.rtti_doc_upload_field_storage)
-            self.rtti_doc_tmp_filepath = self.rtti_doc_filepath + '~'
+            if self.rtti_doc_upload_field_storage.filename:
+                self.rtti_doc_filename = self.rtti_doc_upload_field_storage.filename
+                self.rtti_doc_filename = str(datetime.datetime.utcnow()) + self.rtti_doc_filename
+                self.rtti_doc_filename = munge.munge_filename_legacy(self.rtti_doc_filename)
+                organization_storagepath = os.path.join(self.storage_path, data_dict.get('name'))
+                _make_dirs_if_not_existing(organization_storagepath)
+                self.rtti_doc_filepath = os.path.join(organization_storagepath, self.rtti_doc_filename)
+                data_dict['rtti_doc_document_upload'] = self.rtti_doc_filename
+                data_dict['url_type'] = 'upload'
+                self.rtti_doc_upload_file = _get_underlying_file(self.rtti_doc_upload_field_storage)
+                self.rtti_doc_tmp_filepath = self.rtti_doc_filepath + '~'
         # keep the file if there has been no change
         elif self.rtti_doc_old_filename and not self.rtti_doc_old_filename.startswith('http'):
             if not self.rtti_doc_clear:
@@ -219,16 +252,17 @@ class OrganizationUploader(object):
         self.proxy_doc_file_field='proxy_upload'
         self.proxy_doc_upload_field_storage  = data_dict.pop(self.proxy_doc_file_field, None)
         if isinstance(self.proxy_doc_upload_field_storage, (ALLOWED_UPLOAD_TYPES)):
-            self.proxy_doc_filename= self.proxy_doc_upload_field_storage.filename
-            self.proxy_doc_filename= munge.munge_filename(self.proxy_doc_filename)  
-            organization_storagepath = os.path.join(self.storage_path, data_dict.get('name'))
-            _make_dirs_if_not_existing(organization_storagepath)
-            self.proxy_doc_filepath= os.path.join(organization_storagepath, self.proxy_doc_filename)
-            data_dict['proxy_pdf_url'] = self.proxy_doc_filename
-            data_dict['url_type'] = 'upload'
-            #print("\nDATA_DICT: proxy_doc_upload_field_storage",self.proxy_doc_upload_field_storage )
-            self.proxy_doc_upload_file = _get_underlying_file(self.proxy_doc_upload_field_storage)
-            self.proxy_doc_tmp_filepath = self.proxy_doc_filepath + '~'
+            if self.proxy_doc_upload_field_storage.filename:
+                self.proxy_doc_filename = self.proxy_doc_upload_field_storage.filename
+                self.proxy_doc_filename = str(datetime.datetime.utcnow()) + self.proxy_doc_filename
+                self.proxy_doc_filename = munge.munge_filename(self.proxy_doc_filename)  
+                organization_storagepath = os.path.join(self.storage_path, data_dict.get('name'))
+                _make_dirs_if_not_existing(organization_storagepath)
+                self.proxy_doc_filepath= os.path.join(organization_storagepath, self.proxy_doc_filename)
+                data_dict['proxy_pdf_url'] = self.proxy_doc_filename
+                data_dict['url_type'] = 'upload'
+                self.proxy_doc_upload_file = _get_underlying_file(self.proxy_doc_upload_field_storage)
+                self.proxy_doc_tmp_filepath = self.proxy_doc_filepath + '~'
         #keep the file if there has been no change
         elif self.proxy_doc_old_filename and not self.proxy_doc_old_filename.startswith('http'):
             if not self.proxy_doc_clear:
@@ -237,25 +271,6 @@ class OrganizationUploader(object):
                 data_dict['proxy_pdf_url'] = ''
         # end PROXY DOC hack
         
-        if self.old_filename:
-            self.old_filepath = os.path.join(self.storage_path, data_dict.get('name'), self.old_filename)
-
-        if isinstance(self.upload_field_storage, (ALLOWED_UPLOAD_TYPES)):
-            self.filename = self.upload_field_storage.filename
-            self.filename = munge.munge_filename(self.filename)
-            organization_storagepath = os.path.join(self.storage_path, data_dict.get('name'))
-            _make_dirs_if_not_existing(organization_storagepath)
-            self.filepath = os.path.join(organization_storagepath, self.filename)
-            data_dict[url_field] = self.filename
-            data_dict['url_type'] = 'upload'
-            self.upload_file = _get_underlying_file(self.upload_field_storage)
-            self.tmp_filepath = self.filepath + '~'
-        # keep the file if there has been no change
-        elif self.old_filename and not self.old_filename.startswith('http'):
-            if not self.clear:
-                data_dict[url_field] = self.old_filename
-            if self.clear and self.url == self.old_filename:
-                data_dict[url_field] = ''
 
     def upload(self, max_size=2):
         """ Actually upload the file.
@@ -264,6 +279,8 @@ class OrganizationUploader(object):
         anything unless the request is actually good.
         max_size is size in MB maximum of the file"""
         if self.filename:
+            assert self.upload_file and self.filepath
+
             with open(self.tmp_filepath, 'wb+') as output_file:
                 try:
                     _copy_file(self.upload_file, output_file, max_size)
@@ -276,7 +293,8 @@ class OrganizationUploader(object):
             self.clear = True
 
         if (self.clear and self.old_filename
-                and not self.old_filename.startswith('http')):
+                and not self.old_filename.startswith('http')
+                and self.old_filepath):
             try:
                 os.remove(self.old_filepath)
             except OSError:
@@ -297,7 +315,8 @@ class OrganizationUploader(object):
             self.sstp_doc_clear = True
 
         if (self.sstp_doc_clear and self.sstp_doc_old_filename
-                and not self.sstp_doc_old_filename.startswith('http')):
+                and not self.sstp_doc_old_filename.startswith('http')
+                and self.sstp_doc_old_filepath):
             try:
                 os.remove(self.sstp_doc_old_filepath)
             except OSError:
@@ -317,7 +336,8 @@ class OrganizationUploader(object):
             self.srti_doc_clear = True
 
         if (self.srti_doc_clear and self.srti_doc_old_filename
-                and not self.srti_doc_old_filename.startswith('http')):
+                and not self.srti_doc_old_filename.startswith('http')
+                and self.srti_doc_old_filepath):
             try:
                 os.remove(self.srti_doc_old_filepath)
             except OSError:
@@ -337,7 +357,8 @@ class OrganizationUploader(object):
             self.rtti_doc_clear = True
 
         if (self.rtti_doc_clear and self.rtti_doc_old_filename
-                and not self.rtti_doc_old_filename.startswith('http')):
+                and not self.rtti_doc_old_filename.startswith('http')
+                and self.rtti_doc_old_filepath):
             try:
                 os.remove(self.rtti_doc_old_filepath)
             except OSError:
@@ -357,9 +378,72 @@ class OrganizationUploader(object):
             os.rename(self.proxy_doc_tmp_filepath, self.proxy_doc_filepath)
             self.proxy_doc_clear = True
         
-        if (self.proxy_doc_clear and self.proxy_doc_old_filename and not self.proxy_doc_old_filename.startswith('http')):
+        if (self.proxy_doc_clear and self.proxy_doc_old_filename 
+                and not self.proxy_doc_old_filename.startswith('http')
+                and self.proxy_doc_old_filepath):
             try:
                 os.remove(self.proxy_doc_old_filepath)
             except OSError:
                 pass
         #end PROXY DOC hack
+
+    def verify_type(self):
+
+        if not self.upload_file:
+            return
+
+        allowed_mimetypes = config.get(
+            f"ckan.upload.{self.object_type}.mimetypes")
+        allowed_types = config.get(f"ckan.upload.{self.object_type}.types")
+        if not allowed_mimetypes and not allowed_types:
+            raise logic.ValidationError(
+                {
+                    self.file_field: [f"No uploads allowed for object type {self.object_type}"]
+                }
+            )
+
+        # Check that the declared types in the request are supported
+        declared_mimetype_from_filename = mimetypes.guess_type(
+            self.upload_field_storage.filename
+        )[0]
+        declared_content_type = self.upload_field_storage.content_type
+        for declared_mimetype in (
+            declared_mimetype_from_filename,
+            declared_content_type,
+        ):
+            if (
+                declared_mimetype
+                and allowed_mimetypes
+                and allowed_mimetypes[0] != "*"
+                and declared_mimetype not in allowed_mimetypes
+            ):
+                raise logic.ValidationError(
+                    {
+                        self.file_field: [
+                            f"Unsupported upload type: {declared_mimetype}"
+                        ]
+                    }
+                )
+
+        # Check that the actual type guessed from the contents is supported
+        # (2KB required for detecting xlsx mimetype)
+        content = self.upload_file.read(2048)
+        guessed_mimetype = magic.from_buffer(content, mime=True)
+
+        self.upload_file.seek(0, os.SEEK_SET)
+
+        err: ErrorDict = {
+            self.file_field: [f"Unsupported upload type: {guessed_mimetype}"]
+        }
+
+        if allowed_mimetypes and allowed_mimetypes[0] != "*" and guessed_mimetype not in allowed_mimetypes:
+            raise logic.ValidationError(err)
+
+        type_ = guessed_mimetype.split("/")[0]
+        if allowed_types and allowed_types[0] != "*" and type_ not in allowed_types:
+            raise logic.ValidationError(err)
+
+        preferred_extension = mimetypes.guess_extension(guessed_mimetype)
+        if preferred_extension:
+            self.filename = str(Path(self.filename).with_suffix(preferred_extension))
+            self.filepath = str(Path(self.filepath).with_suffix(preferred_extension))
