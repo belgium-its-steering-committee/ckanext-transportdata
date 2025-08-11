@@ -2,8 +2,8 @@
 
 # ckanext-transportdata
 
-**TODO:** Put a description of your extension here:  What does it do? What features does it have? Consider including some screenshots or embedding a video!
-
+Includes some fixes created when upgrading app-transportdata to CKAN 2.11.
+This should be merged into ckanext-benap plugin.
 
 ## Requirements
 
