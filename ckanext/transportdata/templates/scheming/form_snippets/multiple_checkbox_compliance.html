@@ -24,10 +24,12 @@
         {%- set choices = choices|sort(case_sensitive=false, attribute=1) -%}
     {%- endif -%}
 
+    {# general help is shown above the checkbox(es), if desired to show under,
+       add the help_text under `choices` #}
+    {{ help_text(field.help_text) }}
     <fieldset class="checkboxes">
     {%- for val, label, mhelp in choices -%}
-        {%- if mhelp -%}
-            <label style="margin: 8px 0 0 8px;" for="field-{{ field.field_name }}-{{ val }}">
+        <label style="margin: 8px 0 0 8px;" for="field-{{ field.field_name }}-{{ val }}">
                 <div style="display: flex; align-items: center;">
                     <input id="field-{{ field.field_name }}-{{ val }}"
                         type="checkbox"
@@ -42,6 +44,5 @@
             {{ help_text(mhelp) }}
     {%- endfor -%}
     </fieldset>
-    {{ help_text(field.help_text) }}
 {%- endcall -%}
 
