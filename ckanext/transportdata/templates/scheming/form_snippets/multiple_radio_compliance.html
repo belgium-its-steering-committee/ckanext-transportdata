@@ -19,9 +19,11 @@ fieldset.radios label input {
 </style>
 
 {% macro help_text(help_text_content) %}
-    <div style="padding-left: 24px;">
-      {%- snippet 'scheming/form_snippets/help_text.html', field={'help_text': help_text_content} -%}
-    </div>
+    {%- if help_text_content -%}
+        <div style="padding-left: 24px;">
+        {%- snippet 'scheming/form_snippets/help_text.html', field={'help_text': help_text_content} -%}
+        </div>
+    {%- endif -%}
 {% endmacro %}
 
 {%- call form.input_block(
