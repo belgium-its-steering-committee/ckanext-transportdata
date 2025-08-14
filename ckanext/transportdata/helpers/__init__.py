@@ -1,22 +1,49 @@
 import ckan.plugins.toolkit as toolkit
 from ckan.logic import NotAuthorized
+import re
+from ckan.lib.helpers import get_site_protocol_and_host, lang
 
-# Copied from https://github.com/belgium-its-steering-committee/ckanext-scheming/blob/MobilityDCAT/root/ckanext/scheming/helpers.py#L348
-def scheming_split_help_text_by_link(help_text):
+
+
+def scheming_parse_embedded_links(string_with_links):
     """
-    Split help text in different parts by looking for '<a>' tags
-    :param help_text: input help text
-    :return: list of parts
+    Parse string text that contains links. Links should be added as `<a href="/your/link">link text</a>`.
+    If the link start with `/`, it is considered as a relative link
+    and will automatically get prefixed with the correct language code. (e.g. `/pages/your-page` becomes `/en/pages/your-page`)
+    if not, the link is kept as is.
+    :param string_with_links: input string containing <a href="...">link text</a>
+    :return: list of parts with text and href information. If no links, will contain one (normal-text) part
     """
     parts_list = []
-    if "<a>" in help_text:
-        parts = help_text.split("<a>")
-        parts2 = parts[1].split("</a>")
-        parts_list.append({"text": parts[0], "link": False})
-        parts_list.append({"text": parts2[0], "link": True})
-        parts_list.append({"text": parts2[1], "link": False})
-    else:
-        parts_list.append({"text": help_text, "link": False})
+    
+    # match <a href='...'>link text</a>
+    pattern = r'<a\s+href=["\']([^"\']+)["\'][^>]*>([^<]+)</a>'
+    
+    last_link_match_end = 0
+    for match in re.finditer(pattern, string_with_links):
+        # text starting from end last link (or beginning) till before this link
+        parts_list.append({
+            "text": string_with_links[last_link_match_end:match.start()],
+            "href": None
+        })
+        
+        # link itself
+        href = match.group(1)
+        link_text = match.group(2)
+
+        if href.startswith('/'):
+            protocol, host = get_site_protocol_and_host()
+            if protocol and host:
+                href = f"{protocol}://{host}/{lang()}{href}"
+        
+        parts_list.append({ "text": link_text,"href": href })
+        
+        last_link_match_end = match.end()
+    
+    # text after last link
+    if last_link_match_end < len(string_with_links):
+        parts_list.append({ "text": string_with_links[last_link_match_end:], "href": None })
+    
     return parts_list
 
 

@@ -19,25 +19,15 @@ fieldset.radios label input {
     classes=['control-medium'],
     error=errors[field.field_name],
     is_required=h.scheming_field_required(field)) -%}
-  {%- set choices = [] -%}
-
-  {%- if field.get('multi_help', false) -%}
+    {%- set choices = [] -%}
     {%- for c in h.scheming_field_choices(field) -%}
         {%- do choices.append(
         (c.value, h.scheming_language_text(c.label), h.scheming_language_text(c.help_text))) -%}
     {%- endfor -%}
-  {%- else -%}
-    {%- for c in h.scheming_field_choices(field) -%}
-        {%- do choices.append(
-        (c.value, h.scheming_language_text(c.label))) -%}
-    {%- endfor -%}
-  {%- endif -%}
-
 
   {%- if field.get('sorted_choices') -%}
     {%- set choices = choices|sort(case_sensitive=false, attribute=1) -%}
   {%- endif -%}
-  {%- if field.get('multi_help', false) -%}
     <fieldset class="radios">
         {%- for val, label, mhelp in choices -%}
             <label for="field-{{ field.field_name }}-{{ val }}">
@@ -47,24 +37,12 @@ fieldset.radios label input {
                     value="{{ val }}"
                     {{"checked " if val in data[field.field_name] }} />
                 {{ label }}
-                {{ mhelp }}
+                {%- if mhelp -%}
+                    {{ mhelp }}
+                {%- endif -%}
             </label>
         {%- endfor -%}
     </fieldset>
-  {%- else -%}
-    <fieldset class="radios">
-        {%- for val, label in choices -%}
-            <label for="field-{{ field.field_name }}-{{ val }}">
-                <input id="field-{{ field.field_name }}-{{ val }}"
-                    type="radio"
-                    name="{{ field.field_name }}"
-                    value="{{ val }}"
-                    {{"checked " if val in data[field.field_name] }} />
-                {{ label }}
-            </label>
-        {%- endfor -%}
-    </fieldset>
-  {%- endif -%}
-  {%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
+    {%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
 {%- endcall -%}
 
