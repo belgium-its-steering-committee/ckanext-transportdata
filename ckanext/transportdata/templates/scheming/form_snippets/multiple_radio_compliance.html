@@ -1,4 +1,5 @@
 {% import 'macros/form.html' as form %}
+{% from 'macros/string_utils.html' import render_string_with_links %}
 
 <style>
 fieldset.radios label {
@@ -17,32 +18,32 @@ fieldset.radios label input {
 }
 </style>
 
+{% macro help_text(help_text_content) %}
+    {%- if help_text_content -%}
+        <div style="padding-left: 24px;">
+        {%- snippet 'scheming/form_snippets/help_text.html', field={'help_text': help_text_content} -%}
+        </div>
+    {%- endif -%}
+{% endmacro %}
+
 {%- call form.input_block(
     label=h.scheming_language_text(field.label),
     classes=['control-medium no-bottom-margin'],
     error=errors[field.field_name],
     is_required=h.scheming_field_required(field)) -%}
-  {%- set choices = [] -%}
-
-  {%- if field.get('multi_help', false) -%}
+    {%- set choices = [] -%}
     {%- for c in h.scheming_field_choices(field) -%}
         {%- do choices.append(
-        (c.value, h.scheming_language_text(c.label), h.scheming_language_text(c.help_text), c.help_link)) -%}
+        (c.value, h.scheming_language_text(c.label), h.scheming_language_text(c.help_text))) -%}
     {%- endfor -%}
-  {%- else -%}
-    {%- for c in h.scheming_field_choices(field) -%}
-        {%- do choices.append(
-        (c.value, h.scheming_language_text(c.label))) -%}
-    {%- endfor -%}
-  {%- endif -%}
-
 
   {%- if field.get('sorted_choices') -%}
     {%- set choices = choices|sort(case_sensitive=false, attribute=1) -%}
   {%- endif -%}
-  {%- if field.get('multi_help', false) -%}
+  
     <fieldset class="radios">
-        {%- for val, label, mhelp, mhelp_link in choices -%}
+        {%- for val, label, mhelp in choices -%}
+            {%- if mhelp -%}
             <label style="margin: 8px 0 0 8px;" for="field-{{ field.field_name }}-{{ val }}">
                 <div style="display: flex; align-items: center;">
                     <input id="field-{{ field.field_name }}-{{ val }}"
@@ -50,40 +51,22 @@ fieldset.radios label input {
                     name="{{ field.field_name }}"
                     value="{{ val }}"/>
                     <!-- {{"checked " if val in data[field.field_name] }} /> -->
-                    <div style="padding-left: 8px;">{{ label }}</div>
+                    <div style="padding-left: 8px;">{{ render_string_with_links(label) }}</div>
                 </div>
-
             </label>
-            <div style="padding-left: 24px;" class="info-block ">
-                <i class="fa fa-info-circle"></i> &nbsp;&nbsp;
-                    {%- if mhelp_link != "" -%}
-                    {%- for p in h.scheming_split_help_text_by_link(mhelp) -%}
-                         {%- if p.link -%}
-                            <a target="_blank" href="{{ h.get_site_protocol_and_host()[0] }}://{{ h.get_site_protocol_and_host()[1] }}/{{ h.lang() }}{{ mhelp_link }}" style="color: #1c71bf;font-style: italic;">{{ p.text }}</a>
-                         {%- else -%}
-                            {{ p.text }}
-                         {%- endif -%}
-                    {%- endfor -%}
-                    {%- else -%}
-                        <span style="color: #333333; font-style: italic;">{{ mhelp }}</span>
-                    {%- endif -%}
-                <br/><br/>
-            </div>
-        {%- endfor -%}
-    </fieldset>
-  {%- else -%}
-    <fieldset class="radios">
-        {%- for val, label in choices -%}
+            {{ help_text(mhelp) }}
+            {%- else -%}
             <label for="field-{{ field.field_name }}-{{ val }}">
                 <input id="field-{{ field.field_name }}-{{ val }}"
                     type="radio"
                     name="{{ field.field_name }}"
                     value="{{ val }}"/>
                     <!-- {{"checked " if val in data[field.field_name] }} /> -->
-                {{ label }}
+                {{ render_string_with_links(label) }}
             </label>
+            {%- endif -%}
         {%- endfor -%}
     </fieldset>
-  {%- endif -%}
+    {{ help_text(field.help_text) }}
 {%- endcall -%}
 
