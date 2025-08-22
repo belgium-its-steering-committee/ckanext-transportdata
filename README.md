@@ -1,3 +1,6 @@
+**This repo has been archived, as it was merged into https://github.com/belgium-its-steering-committee/ckanext-benap via PR https://github.com/belgium-its-steering-committee/ckanext-benap/pull/111 and released in ckanext-benap:4.0.0**
+
+
 [![Tests](https://github.com//ckanext-transportdata/workflows/Tests/badge.svg?branch=main)](https://github.com//ckanext-transportdata/actions)
 
 # ckanext-transportdata
